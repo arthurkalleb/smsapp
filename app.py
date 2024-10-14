@@ -2,6 +2,34 @@ import streamlit as st
 from datetime import time
 import sqlite3
 
+
+def create_table():
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS pacientes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome_paciente TEXT NOT NULL,
+            procedimento TEXT NOT NULL,
+            contato TEXT NOT NULL,
+            local_consulta TEXT NOT NULL,
+            hora_consulta TEXT NOT NULL,
+            parada_embarque TEXT NOT NULL,
+            passagem_concedida INTEGER DEFAULT 0,
+            foto_documento BLOB
+        )
+    ''')
+    conn.commit()
+    conn.close()
+
+
+# Chame a função para criar a tabela
+create_table()
+
+# Isso cria ou acessa o banco de dados no mesmo diretório do seu script
+conn = sqlite3.connect('database.db')
+
+
 # Função para obter conexão com o banco de dados SQLite
 
 def get_db_connection(db_path='database.db'):
@@ -9,6 +37,7 @@ def get_db_connection(db_path='database.db'):
     return conn
 
 # Função para salvar os dados do paciente no banco de dados
+
 
 def save_paciente_to_db(paciente_info):
     conn = get_db_connection()
