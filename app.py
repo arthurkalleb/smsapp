@@ -1,45 +1,11 @@
 import streamlit as st
 from datetime import time
 import sqlite3
+from funcoes import create_table
 
-
-import sqlite3
-
-# Conectando ao banco de dados
-conn = sqlite3.connect('database.db')
-cursor = conn.cursor()
-
-# Verificando as tabelas existentes
-cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
-tables = cursor.fetchall()
-print(tables)  # Exibe todas as tabelas
-
-
-def create_table():
-    conn = sqlite3.connect('database.db')
-    cursor = conn.cursor()
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS pacientes (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nome_paciente TEXT NOT NULL,
-            procedimento TEXT NOT NULL,
-            contato TEXT NOT NULL,
-            local_consulta TEXT NOT NULL,
-            hora_consulta TEXT NOT NULL,
-            parada_embarque TEXT NOT NULL,
-            passagem_concedida INTEGER DEFAULT 0,
-            foto_documento BLOB
-        )
-    ''')
-    conn.commit()
-    conn.close()
-
-
-create_table()  # Chame esta função para garantir que a tabela seja criada
-
+create_table()
 
 # Função para obter conexão com o banco de dados SQLite
-
 
 def get_db_connection(db_path='database.db'):
     conn = sqlite3.connect(db_path)
