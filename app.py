@@ -1,9 +1,6 @@
 import streamlit as st
 from datetime import time
 import sqlite3
-from funcoes import create_table
-
-create_table()
 
 # Função para obter conexão com o banco de dados SQLite
 
@@ -12,7 +9,6 @@ def get_db_connection(db_path='database.db'):
     return conn
 
 # Função para salvar os dados do paciente no banco de dados
-
 
 def save_paciente_to_db(paciente_info):
     conn = get_db_connection()
