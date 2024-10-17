@@ -1,11 +1,13 @@
 import streamlit as st
 from datetime import time
 import sqlite3
+import os
 
 # Função para obter conexão com o banco de dados SQLite
 
 
 def get_db_connection(db_path='database.db'):
+    db_path = os.path.join(os.path.dirname(__file__), db_path)
     conn = sqlite3.connect(db_path)
     return conn
 
@@ -94,21 +96,13 @@ hora_consulta = st.time_input(
 
 # Seção da parada de embarque
 st.header('Parada de Embarque')
-bairro_embarque = st.selectbox(
-    'Bairro de Embarque',
-    ['Alto da Esperança', 'Alto da esperança', 'Centro', 'Alto do Triângulo'],
-    index=['Alto da Esperança', 'Alto da esperança', 'Centro', 'Alto do Triângulo'].index(
-        st.session_state['paciente_info']['bairro_embarque'])
-)
+bairro_embarque = st.selectbox('Bairro de Embarque', ['Alto da Esperança', 'Alto da esperança', 'Centro', 'Alto do Triângulo'], index=[
+                               'Alto da Esperança', 'Alto da esperança', 'Centro', 'Alto do Triângulo'].index(st.session_state['paciente_info']['bairro_embarque']))
 st.session_state['paciente_info']['bairro_embarque'] = bairro_embarque
 
 paradas = get_paradas(bairro_embarque)
-parada_embarque = st.selectbox(
-    'Parada de Embarque',
-    paradas,
-    index=paradas.index(st.session_state['paciente_info']['parada_embarque']
-                        ) if st.session_state['paciente_info']['parada_embarque'] in paradas else 0
-)
+parada_embarque = st.selectbox('Parada de Embarque', paradas, index=paradas.index(
+    st.session_state['paciente_info']['parada_embarque']) if st.session_state['paciente_info']['parada_embarque'] in paradas else 0)
 
 # Seção de upload de documento
 st.header('Confirmação')
