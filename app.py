@@ -48,6 +48,33 @@ def save_paciente_to_db(paciente_info):
     conn.commit()
     cursor.close()
     conn.close()
+# Função para garantir que a tabela sera criada caso ainda não exista
+
+
+def ensure_table_exists():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS pacientes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome_paciente TEXT,
+            procedimento TEXT,
+            contato TEXT,
+            local_consulta TEXT,
+            hora_consulta TEXT,
+            bairro_embarque TEXT,
+            parada_embarque TEXT,
+            foto_documento BLOB,
+            passagem_concedida INTEGER DEFAULT 0
+        )
+    ''')
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+
+# Certificar que a tabela existe ao inicializar o app
+ensure_table_exists()
 
 # Função para obter paradas por bairro
 

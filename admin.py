@@ -28,35 +28,6 @@ def get_db_connection(db_path='database.db'):
         st.error(f"Erro ao conectar com o banco de dados: {e}")
         return None
 
-# garante que a tabela sera criada caso não exista
-
-
-def ensure_table_exists():
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS pacientes (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nome_paciente TEXT,
-            procedimento TEXT,
-            contato TEXT,
-            local_consulta TEXT,
-            hora_consulta TEXT,
-            bairro_embarque TEXT,
-            parada_embarque TEXT,
-            foto_documento BLOB,
-            passagem_concedida INTEGER DEFAULT 0
-        )
-    ''')
-    conn.commit()
-    cursor.close()
-    conn.close()
-
-
-# Certificar que a tabela existe ao inicializar o app
-ensure_table_exists()
-
-
 # Função para carregar dados dos pacientes agendados
 
 
